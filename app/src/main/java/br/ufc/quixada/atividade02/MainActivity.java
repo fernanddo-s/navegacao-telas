@@ -88,16 +88,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clicarEditar() {
-        Intent intent = new Intent(this, ActivityEdit.class);
+        if (selected >= 0) {
+            Intent intent = new Intent(this, ActivityEdit.class);
 
-        Aluno aluno = listaAlunos.get(selected);
+            Aluno aluno = listaAlunos.get(selected);
 
-        intent.putExtra("id", aluno.getId());
-        intent.putExtra("nome", aluno.getNome());
-        intent.putExtra("matricula", aluno.getMatricula());
-        intent.putExtra("curso", aluno.getCurso());
+            intent.putExtra("id", aluno.getId());
+            intent.putExtra("nome", aluno.getNome());
+            intent.putExtra("matricula", aluno.getMatricula());
+            intent.putExtra("curso", aluno.getCurso());
 
-        startActivityForResult(intent, Constants.REQUEST_EDIT);
+            startActivityForResult(intent, Constants.REQUEST_EDIT);
+        } else {
+            Toast.makeText(MainActivity.this, "Selecione um Item", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
@@ -115,10 +120,10 @@ public class MainActivity extends AppCompatActivity {
             String nome = (String) data.getExtras().get("nome");
             String matricula = (String) data.getExtras().get("matricula");
             String curso = (String) data.getExtras().get("curso");
-            int idEditar = (int)data.getExtras().get("id");
+            int idEditar = (int) data.getExtras().get("id");
 
-            for (Aluno aluno: listaAlunos) {
-                if(aluno.getId() == idEditar){
+            for (Aluno aluno : listaAlunos) {
+                if (aluno.getId() == idEditar) {
                     aluno.setNome(nome);
                     aluno.setMatricula(matricula);
                     aluno.setCurso(curso);
